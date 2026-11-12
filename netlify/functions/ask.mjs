@@ -72,7 +72,8 @@ export default async (req, context) => {
     const r = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: { 'x-api-key': key, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
-      body: JSON.stringify({ model: MODEL, max_tokens: 450, system: RULES, messages })
+      // Haiku 5.5 thinks by default and thinking counts toward max_tokens: switch it off for short grounded answers
+      body: JSON.stringify({ model: MODEL, max_tokens: 900, thinking: { type: 'disabled' }, system: RULES, messages })
     });
     if (!r.ok) return reply({ error: r.status === 429 ? 'rate_limited' : 'upstream_error', status: r.status }, 502, cors);
     const data = await r.json();
