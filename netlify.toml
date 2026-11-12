@@ -1,0 +1,6 @@
+# Praharsh LLM backend. The page lives on GitHub Pages; this project only serves /api/ask.
+[build]
+  publish = "public"
+
+[functions]
+  directory = "netlify/functions"
